@@ -68,17 +68,28 @@ public class ProductoFDAO {
     }
    
     public PeliculasDTO obtenerPorId(PeliculasDTO dto) throws IOException, ClassNotFoundException{
-        PeliculasDTO pelicula=null;
+       
+       PeliculasDTO pelicula=null;
         String registro=null;
+        raf.seek(0);
         numRegistro=0;
+        System.out.println("raflenght: " + raf.length());
         do{
             registro=raf.readLine();
-            pelicula=new PeliculasDTO(registro);
-            if(pelicula.equals(dto)){
-                System.out.println(pelicula+" encontrado en la posicion "+numRegistro);
-                break;
-            }
-            numRegistro++;            
+            registro = registro.substring(registro.indexOf("{") , registro.indexOf("}")+1);
+            System.out.println("registro raf: " + registro);
+                if (registro == null) {
+                    pelicula = null;
+                } else {
+                    pelicula=new PeliculasDTO(registro);
+                    if(pelicula.equals(dto)){
+                        System.out.println(pelicula+" encontrado en la posicion "+numRegistro);
+                        break;
+                    }
+                }
+       
+                numRegistro++;    
+               
         }while(registro!=null);
         raf.seek(0);
         return pelicula;
@@ -91,6 +102,7 @@ public class ProductoFDAO {
         raf.seek(0);
         do{
             registro=raf.readLine();
+            //registro = registro.substring(registro.indexOf("{") + 1, registro.indexOf("}"));
             pelicula=new PeliculasDTO(registro);
             peliculas.add(pelicula);
         }while(registro!=null);

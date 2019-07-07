@@ -85,15 +85,15 @@ public class ProductoView extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(30, 50, 60, 15);
+        jLabel3.setBounds(30, 50, 60, 14);
 
         jLabel4.setText("Año");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(30, 80, 60, 15);
+        jLabel4.setBounds(30, 80, 60, 14);
 
         jLabel5.setText("Estudio");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(30, 260, 90, 15);
+        jLabel5.setBounds(30, 260, 90, 14);
 
         txtId.setColumns(3);
         getContentPane().add(txtId);
@@ -121,7 +121,7 @@ public class ProductoView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnInsertar);
-        btnInsertar.setBounds(320, 20, 80, 25);
+        btnInsertar.setBounds(320, 20, 80, 23);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +130,7 @@ public class ProductoView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnBuscar);
-        btnBuscar.setBounds(320, 60, 80, 25);
+        btnBuscar.setBounds(320, 60, 80, 23);
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +139,7 @@ public class ProductoView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEditar);
-        btnEditar.setBounds(320, 100, 80, 25);
+        btnEditar.setBounds(320, 100, 80, 23);
 
         btnEliminar.setText("Borrar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +148,7 @@ public class ProductoView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEliminar);
-        btnEliminar.setBounds(320, 140, 80, 25);
+        btnEliminar.setBounds(320, 140, 80, 23);
 
         btnListar.setText("Listar");
         btnListar.addActionListener(new java.awt.event.ActionListener() {
@@ -168,23 +168,23 @@ public class ProductoView extends javax.swing.JFrame {
 
         jLabel6.setText("Id");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(30, 20, 60, 15);
+        jLabel6.setBounds(30, 20, 60, 14);
 
         jLabel7.setText("Género");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(30, 110, 60, 15);
+        jLabel7.setBounds(30, 110, 60, 14);
 
         jLabel8.setText("País");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(30, 140, 60, 15);
+        jLabel8.setBounds(30, 140, 60, 14);
 
         jLabel9.setText("Director");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(30, 170, 60, 15);
+        jLabel9.setBounds(30, 170, 60, 14);
 
         jLabel10.setText("Duración");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(30, 200, 60, 15);
+        jLabel10.setBounds(30, 200, 60, 14);
 
         txtGenero.setColumns(3);
         txtGenero.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +209,7 @@ public class ProductoView extends javax.swing.JFrame {
 
         jLabel11.setText("Clasificación");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(30, 230, 90, 15);
+        jLabel11.setBounds(30, 230, 90, 14);
 
         txtClasificacion.setColumns(3);
         getContentPane().add(txtClasificacion);
@@ -303,21 +303,18 @@ public class ProductoView extends javax.swing.JFrame {
         
         String Id=null;
         dto=new PeliculasDTO();
-        System.out.println(dto);
+        //System.out.println(dto);
         try{
             Id=JOptionPane.showInputDialog(" Id a buscar ");
             dto.setId(Long.parseLong(Id));
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Id no coincide con ningún registro");
+            JOptionPane.showMessageDialog(this,"Id no coincide con ningún registro");
             return;
         }
-        
-        
-        
         try {
             dto=dao.obtenerPorId(dto);
             if(dto==null){
-                JOptionPane.showMessageDialog(this, " NO SE ENCONTRO ");
+                JOptionPane.showMessageDialog(this, "Id no coincide con ningún registro");
             }else{
                 txtId.setText(String.valueOf(dto.getId()));
                 txtNombre.setText(dto.getNombre().toString());
@@ -334,7 +331,7 @@ public class ProductoView extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProductoView.class.getName()).log(Level.SEVERE, null, ex);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Id no coincide con ningún registro");
+            JOptionPane.showMessageDialog(this, "Id no coincide con ningún registro");
        
         }
         
@@ -366,15 +363,34 @@ public class ProductoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String Id=null;
         dto=new PeliculasDTO();
+         try{
+            Id=JOptionPane.showInputDialog(" Id a buscar ");
+            dto.setId(Long.parseLong(Id));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Id no coincide con ningún registro");
+            return;
+        }
         try {
-            if(dao.eliminar(dto)){
-                JOptionPane.showMessageDialog(this, " BORRADO ");
+            dto=dao.obtenerPorId(dto);
+            if(dto==null){
+                JOptionPane.showMessageDialog(this, "Id no coincide con ningún registro");
             }else{
-                JOptionPane.showMessageDialog(this, " NO SE PUDO BORRAR ");
+            dto=new PeliculasDTO();
+            try {
+                if(dao.eliminar(dto)){
+                    JOptionPane.showMessageDialog(this, " BORRADO ");
+                }else{
+                    JOptionPane.showMessageDialog(this, " NO SE PUDO BORRAR ");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ProductoView.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(ProductoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Id no coincide con ningún registro");
+       
         }
 
     }//GEN-LAST:event_btnEliminarActionPerformed

@@ -200,13 +200,12 @@ public class PeliculasDTO implements Serializable{
     
     public String toStringFile(){
         String idS=""+id;
-        String añoS=""+año;
         String duracionS=""+duracion;
         switch(idS.length()){
             case 1: idS="00"+id; break;
             case 2: idS="0"+id; break;            
         }
-        return "{" + idS + "," + nombre + "," + añoS 
+        return "{" + idS + "," + nombre + "," + año 
                 + "," + genero + ","+ pais + "," + director
                 + ","+ duracionS + "," + clasificacion+ "," + estudio + "}\n";
     }
